@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shir Monorepo
 
-## Getting Started
+Repositorio con el backend en `yameza-be` y el frontend en `app-web`.
 
-First, run the development server:
+## Requisitos
+
+- Node.js instalado
+- npm instalado
+- Docker Desktop o Docker Engine con Compose
+
+## Comandos desde la raíz
+
+### Desarrollo
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Arranca backend y frontend en paralelo usando puertos libres automáticamente.
+El frontend queda conectado al backend mediante `NEXT_PUBLIC_API_URL`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Compilación
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+Compila backend y frontend en secuencia.
 
-To learn more about Next.js, take a look at the following resources:
+### Bootstrap inicial del backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run backend:bootstrap
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Este comando hace exactamente esto, en este orden:
 
-## Deploy on Vercel
+```bash
+docker compose -f yameza-be/docker-compose.yml up -d
+npm --prefix yameza-be run seed
+npm --prefix yameza-be run start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Úsalo la primera vez que prepares el backend, o cuando quieras volver a levantar la base y cargar datos iniciales.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Comandos por separado
+
+### Backend en desarrollo
+
+```bash
+npm run dev:backend
+```
+
+Usa el `PORT` definido en `yameza-be/.env` o el valor por defecto del backend.
+
+### Frontend en desarrollo
+
+```bash
+npm run dev:frontend
+```
+
+Usa su configuración normal de Next.js en `app-web`.
+
+### Backend build
+
+```bash
+npm run build:backend
+```
+
+### Frontend build
+
+```bash
+npm run build:frontend
+```
+
+## Comandos originales del backend
+
+Si prefieres entrar a la carpeta `yameza-be`, también puedes ejecutar manualmente:
+
+```bash
+cd yameza-be
+docker compose up -d
+npm run seed
+npm run start
+```
+
+## Nota importante
+
+- `npm run dev` no reemplaza el bootstrap inicial del backend.
+- Para que el backend quede listo por primera vez, usa `npm run backend:bootstrap`.
+- Después de eso, para trabajar normalmente, usa `npm run dev`.
+- `npm run dev` levanta el frontend con un `distDir` separado para no chocar con otras sesiones previas.

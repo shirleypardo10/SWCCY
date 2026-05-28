@@ -1,0 +1,20 @@
+export enum FurnitureType {
+  ROPERO = 'ROPERO',
+  ZAPATERA = 'ZAPATERA',
+  COMODA = 'COMODA',
+  OTRO = 'OTRO',
+}
+export enum MeasurementUnit {
+  CM = 'CM',
+  M = 'M',
+}
+export enum OrderStatus {
+  REGISTERED = 'REGISTERED',
+  QUOTED = 'QUOTED',
+  APPROVED = 'APPROVED',
+  IN_PRODUCTION = 'IN_PRODUCTION',
+  PRODUCTION_PAUSED = 'PRODUCTION_PAUSED',
+  PRODUCTION_COMPLETED = 'PRODUCTION_COMPLETED',
+  DELIVERED = 'DELIVERED',
+  CANCELLED = 'CANCELLED',
+}
